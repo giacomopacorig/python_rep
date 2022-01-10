@@ -1,0 +1,7 @@
+git status = stato dei progetti nella repository
+
+git add <NomeProgetto> oppure . per tutti i progetti = aggiunge progetto nella lista "to be committed"
+
+git rm --cached <NomeProgetto> = rimuove progetto nella lista "to be committed"
+
+git commit = inizia il commmit. Premere i per INSERT, poi ESC e :wq
