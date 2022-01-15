@@ -1,51 +1,47 @@
-class ExamException(Exception) :
-    
-    def __init__(self, message) :
-        super().__init__(message);
-
-###################################################################################################
-
-class MovingAverage() :
-
-    def __init__(self, window_length) : # Costruttore.
-
-        self.window_length = window_length;
-
-    #----------------------------------------------------------------------------------------------
-
-    def compute(self, val_list) : # Metodo per il calcolo della media mobile.
-
-        average_list = []; # Dichiarazione della lista per la memorizzazione dei risultati delle medie mobili.
-        counter = 0; # Variabile contatore.
-        array_counter = 0; # Variabile contatore per l'array.
-        result = 0; # Variabile per il risultato.
-
-        while array_counter <= len(val_list) : # Ciclo della lista di valori.
-
-            while counter <= self.window_length : # Ciclo per il calcolo della media sulla base della lunghezza della finestra.
-
-                result = (val_list[counter] + val_list[counter + 1]) / (self.window_length); # Calcolo della media.
-                counter += 1; # Incremento del contatore.
-
-                average_list.append(result); # Memorizzazione nella lista del risultato della media calcolata.
-                        
-            array_counter += 1; # Incremento del contatore dell'array.
-
-        return average_list; # Lista dei risultati delle medie mobili calcolate come valore di ritorno.
-
-###################################################################################################
-
-##----------##
-##-- Main --##
-##----------##
-moving_average = MovingAverage(2); # Istanza di MovingAverage().
-
-result = moving_average.compute([2, 4, 8, 16]); # Chiamata al metodo compute() di MovingAverage().
-#result = moving_average.compute(None); # Chiamata con lista vuota (eccezione).
-print(result); # Stampa del risultato.
-
-print("ERRORE: eccezione di tipo ExamException trovata");
-#sys.exit()
+class ExamException(Exception):
+    pass
 
 
-    
+
+class MovingAverage:
+
+    def __init__(self, window_size):
+
+        if type(window_size) is not int:
+            raise ExamException("window_size must be an integer")
+
+        if not window_size > 0 :
+            raise ExamException("window_size must be greater than zero")
+        
+        self.window_size = window_size
+
+
+    def compute(self, series):
+
+        if type(self.window_size) is not int:
+            raise ExamException("window_size must be an integer")
+
+        if not self.window_size > 0 :
+            raise ExamException("window_size must be greater than zero")
+
+        if series is None:
+            raise ExamException("series must be defined")
+        
+        if not isinstance(series, list):
+            raise ExamException("series must be a list")
+
+        if not len(series) >= self.window_size:
+            raise ExamException("series length must be greater than window_size")
+
+        if not all(isinstance(x, (int, float)) for x in series):
+            raise ExamException("series tipo must be int or float")
+
+        avg = []
+        for i in range(len(series) - self.window_size + 1):
+            avg_i = sum(series[i:i+self.window_size]) / self.window_size
+            avg.append(avg_i)
+        return avg
+
+m = MovingAverage(3);
+r = m.compute([2, 4, 8, 16, 32]);
+print(r);

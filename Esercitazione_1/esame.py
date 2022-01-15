@@ -6,81 +6,54 @@ class ExamException(Exception) :
 
 ###################################################################################################
 
-class NonIntegerValue(ExamException) :
-    pass;
-
-###################################################################################################
-
-class NoneValue(ExamException) :
-    pass;
-
-###################################################################################################
-
-class EmptyList(ExamException) :
-    pass;
-
-###################################################################################################
-
-class NegativeValue(ExamException) :
-    pass
-
-###################################################################################################
-
-class InvalidList(ExamException) :
-    pass
-
-###################################################################################################
-
-class FloatValue(ExamException) :
-    pass;
-
-###################################################################################################
-
-class WindowList(ExamException) :
-    pass;
-
-###################################################################################################
-
-class ZeroValue(ExamException) :
-    pass;
-
-###################################################################################################
-
 class ExceptionControl() :
 
-    def control(self, window, val_list) :
+    def window_length_control(self, window_length) :
 
-        if isinstance(window, list) == True :
-            raise WindowList;
+        if isinstance(window_length, list) == True :
+            raise ExamException("ExamException: window_length is a list");
 
-        elif isinstance(window, str) == True :
-            raise NonIntegerValue;
+        elif isinstance(window_length, str) == True :
+            raise ExamException("ExamException: window_length is a string");
 
-        elif window == None :
-            raise NoneValue;
+        elif window_length == None :
+            raise ExamException("ExamException: window_length is None");
 
-        elif window == 0 :
-            raise ZeroValue;
+        elif window_length == 0 :
+            raise ExamException("ExamException: window is zero");
 
-        elif window < 0 :
-            raise NegativeValue;
+        elif window_length < 0 :
+            raise ExamException("ExamException: window_length is negative");
 
-        elif val_list == None :
-            raise EmptyList;
+        elif isinstance(window_length, float) == True :
+            raise ExamException("ExamException: window_length is a float");
 
-        elif isinstance(window, float) == True :
-            raise FloatValue;
+    #----------------------------------------------------------------------------------------------
+
+    def list_control(self, val_list, window_length) :
+
+        if val_list == None :
+            raise ExamException("ExamException: val_list is None");
+
+        if isinstance(val_list, list) == False :
+            raise ExamException("ExamException: val_list is not a list");
 
         for item in val_list :
             
-            if isinstance(item, int) == False :
-                raise EmptyList;
+            if isinstance(item, int) == False and isinstance(item, float) == False :
+                raise ExamException("ExamException: one or more items in val_list are not numbers");
+
+        if len(val_list) < window_length :
+            raise ExamException("ExamException: window length is grader than val_list length");
 
 ###################################################################################################
 
 class MovingAverage() :
 
     def __init__(self, window_length) : # Costruttore.
+
+        controller = ExceptionControl();
+        controller.window_length_control(window_length);
 
         self.window_length = window_length;
 
@@ -89,28 +62,17 @@ class MovingAverage() :
     def compute(self, val_list) : # Metodo per il calcolo della media mobile.
 
         average_list = []; # Dichiarazione della lista per la memorizzazione dei risultati delle medie mobili.
-        counter = 0; # Variabile contatore.
         i = 0;
-        array_counter = 0; # Variabile contatore per l'array.
-        result = 0; # Variabile per il risultato.
-        exceptionControl = ExceptionControl();
+        avg_i = 0;
         
-        exceptionControl.control(self.window_length, val_list);
+        controller = ExceptionControl();
+        controller.list_control(val_list, self.window_length); # Controllo delle eccezioni.
 
-        while array_counter <= len(val_list) : # Ciclo della lista di valori.
+        for i in range(len(val_list) - self.window_length + 1) :
+            avg_i = sum(val_list[i:i+self.window_length]) / self.window_length;
+            average_list.append(avg_i);
 
-            counter = 0;
-            i += 1;
-
-            if (i == len(val_list)) :
-                break;
-
-            while counter <= self.window_length : # Ciclo per il calcolo della media sulla base della lunghezza della finestra.
-                result = (val_list[i - 1] + val_list[i]) / (self.window_length); # Calcolo della media.
-                counter += 1; # Incremento del contatore.
-
-            average_list.append(result); # Memorizzazione nella lista del risultato della media calcolata.         
-            array_counter += 1; # Incremento del contatore dell'array.
+        controller.list_control(val_list, self.window_length);
 
         return average_list; # Lista dei risultati delle medie mobili calcolate come valore di ritorno.
 
@@ -120,42 +82,12 @@ class MovingAverage() :
 ##-- Main --##
 ##----------##
 
-moving_average = MovingAverage(2); # Istanza di MovingAverage().
-
-try :
-    #result = moving_average.compute([2, 4, 8, 16]); # Chiamata al metodo compute() di MovingAverage().
-    result = moving_average.compute([2, 4, 8, 16, 32]);
-    #result = moving_average.compute(None); # Chiamata con lista vuota (eccezione).
-    print(result); # Stampa del risultato.
-    #sys.exit()
-
-except NonIntegerValue :
-    print("ExamException: Valore della finestra non numerico");
-
-except NoneValue :
-    print("ExamException: Valore della finestra None");
-
-except InvalidList :
-    print("ExamException: valori della lista non validi")
-
-except EmptyList :
-    print("ExamException: Lista dei valori vuota");
-
-except NegativeValue :
-    print("ExamException: valore della finestra negativo");
-
-except FloatValue :
-    print("ExamException: Valore della finestra decimale");
-
-except WindowList :
-    print("ExamException: la finestra è una lista");
-
-except ZeroValue :
-    print("ExamException: Valore della finestra uguale a 0")
-
-except ExamException :
-    print("ExamException: eccezione di tipo ExamException trovata");
-
-except Exception :
-    raise ExamException;
+# result = moving_average.compute([2, 4, 8, 16]); # Chiamata al metodo compute() di MovingAverage().
+# moving_average = MovingAverage(3); # Istanza di MovingAverage().
+# result = moving_average.compute([2, 4, 8, 16, 32]);
+# result = moving_average.compute([2, 4]);
+# result = moving_average.compute(None); # Chiamata con lista vuota (eccezione).
+# print(result); # Stampa del risultato.
+# print("----------------------------------------------------------------------------------------");
+# sys.exit()
 
