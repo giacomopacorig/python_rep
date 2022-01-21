@@ -90,5 +90,3 @@ class MovingAverage() :
 # print(result); # Stampa del risultato.
 # print("----------------------------------------------------------------------------------------");
 # sys.exit()
-
-# Prova prova prova
