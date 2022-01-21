@@ -54,9 +54,6 @@ class ExceptionControl() :
 class Diff() : 
 
     def __init__(self, ratio = 1) : # Costruttore.
-            
-        # controller = ExceptionControl();
-        # controller.ratio_control(ratio);
 
         if isinstance(ratio, list) == True :
             raise ExamException("ExamException: ratio is a list");
