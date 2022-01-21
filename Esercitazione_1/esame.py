@@ -84,8 +84,8 @@ class MovingAverage() :
 
 # result = moving_average.compute([2, 4, 8, 16]); # Chiamata al metodo compute() di MovingAverage().
 # moving_average = MovingAverage(3); # Istanza di MovingAverage().
-# result = moving_average.compute([2, 4, 8, 16, 32]);
-# result = moving_average.compute([2, 4]);
+# # result = moving_average.compute([2, 4, 8, 16, 32]);
+# # result = moving_average.compute([2, 4]);
 # result = moving_average.compute(None); # Chiamata con lista vuota (eccezione).
 # print(result); # Stampa del risultato.
 # print("----------------------------------------------------------------------------------------");

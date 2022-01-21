@@ -41,7 +41,3 @@ class MovingAverage:
             avg_i = sum(series[i:i+self.window_size]) / self.window_size
             avg.append(avg_i)
         return avg
-
-m = MovingAverage(3);
-r = m.compute([2, 4, 8, 16, 32]);
-print(r);
