@@ -196,7 +196,7 @@ def compute_avg_monthly_difference(time_series, first_year, last_year) : # Funzi
             list_avg_monthly_difference.append(sum_element) # Memorizzazione dei dati ottenuti nella lista precedentemente dichiarata.
             sum_element = 0 # Settaggio della somma a 0.
 
-    print(list_avg_monthly_difference) # Stampa di prova della lista.
+    # print(list_avg_monthly_difference) # Stampa di prova della lista.
 
     return list_avg_monthly_difference # Ritorno della lista ottenuta.
 
@@ -238,6 +238,6 @@ def search_index(element_to_search, list_to_examinate) : # Metodo per la ricerca
 # Main #
 # ---- #
 
-time_series_file = CSVTimeSeriesFile(name = 'data.csv')
-time_series = time_series_file.get_data()
-compute_avg_monthly_difference(time_series, "1949", "1951")
+# time_series_file = CSVTimeSeriesFile(name = 'data.csv')
+# time_series = time_series_file.get_data()
+# compute_avg_monthly_difference(time_series, "1949", "1951")
