@@ -101,7 +101,8 @@ class Diff() :
 ##-- Main --##
 ##----------##
 
-# diff = Diff(2);
-# result = diff.compute([2, 4, 8, 16, 32, 64]);
-# print(result);
-# print('-----------------------------------------');
+diff = Diff(2);
+#result = diff.compute([2, 4, 8, 16, 32, 64]);
+result = diff.compute("ciao")
+print(result);
+print('-----------------------------------------');
